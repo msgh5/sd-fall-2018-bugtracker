@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -12,9 +13,17 @@ namespace GuiBugTracker.Models
     {
         public virtual List<Project> Projects { get; set; }
 
+        [InverseProperty(nameof(Ticket.CreatedBy))]
+        public virtual List<Ticket> CreatedTickets { get; set; }
+
+        [InverseProperty(nameof(Ticket.AssignedTo))]
+        public virtual List<Ticket> AssignedTickets { get; set; }
+
         public ApplicationUser()
         {
             Projects = new List<Project>();
+            CreatedTickets = new List<Ticket>();
+            AssignedTickets = new List<Ticket>();
         }
 
         public string Name { get; set; }
@@ -31,6 +40,7 @@ namespace GuiBugTracker.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
