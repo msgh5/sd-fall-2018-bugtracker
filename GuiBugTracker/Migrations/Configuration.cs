@@ -22,8 +22,15 @@ namespace GuiBugTracker.Migrations
                     new RoleStore<IdentityRole>(context));
 
             var userManager =
-                new UserManager<ApplicationUser>(
+                new ApplicationUserManager(
                         new UserStore<ApplicationUser>(context));
+
+            //If the app needs to create users with - on the name, we need to set the validator.
+            //userManager.UserValidator = new UserValidator<ApplicationUser>(userManager)
+            //{
+            //    AllowOnlyAlphanumericUserNames = false,
+            //    RequireUniqueEmail = true
+            //};
 
             if (!context.Roles.Any(p => p.Name == "Admin"))
             {

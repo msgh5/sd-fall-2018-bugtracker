@@ -1,8 +1,10 @@
 ﻿using GuiBugTracker.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace GuiBugTracker.Controllers
@@ -10,15 +12,20 @@ namespace GuiBugTracker.Controllers
     [Authorize(Roles = "Admin")]
     public class RoleManagementController : Controller
     {
-        private ApplicationDbContext Context;
-        private UserManager<ApplicationUser> UserManager;
-
-        public RoleManagementController()
+        private ApplicationDbContext Context
         {
-            Context = new ApplicationDbContext();
-            UserManager =
-                new UserManager<ApplicationUser>(
-                        new UserStore<ApplicationUser>(Context));
+            get
+            {
+                return HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+            }
+        }
+
+        private ApplicationUserManager UserManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
         }
 
         public ActionResult Index()
