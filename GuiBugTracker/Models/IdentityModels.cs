@@ -41,6 +41,7 @@ namespace GuiBugTracker.Models
     {
         public DbSet<Project> Projects { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<TicketStatus> TicketStatuses { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
@@ -50,6 +51,14 @@ namespace GuiBugTracker.Models
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<TicketStatus>().ToTable("TicketStatuses");
+            modelBuilder.Entity<Ticket>().Property(p => p.Title).HasMaxLength(200).IsUnicode(false).IsRequired();
         }
     }
 }

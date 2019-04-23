@@ -1,0 +1,12 @@
+﻿@model CreateTicketViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Edit</h2>
+
+<form method="post">
+    Title: @Html.TextBoxFor(p => p.Title, new { @class = "form-control" })
+    <button class="btn btn-primary" type="submit">Edit</button>
+</form>

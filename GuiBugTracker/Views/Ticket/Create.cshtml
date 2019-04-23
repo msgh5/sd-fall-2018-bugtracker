@@ -1,0 +1,14 @@
+﻿@model CreateTicketViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<form method="post">
+    @Html.ValidationSummary(false)
+    Title: @Html.TextBoxFor(p => p.Title, new { @class = "form-control" })
+    Status: @Html.DropDownListFor(p => p.StatusId, Model.AllStatuses, new { @class = "form-control" })
+    <button class="btn btn-primary" type="submit">Create</button>
+</form>
