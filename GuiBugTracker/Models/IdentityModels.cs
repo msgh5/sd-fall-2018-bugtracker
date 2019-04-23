@@ -52,13 +52,5 @@ namespace GuiBugTracker.Models
         {
             return new ApplicationDbContext();
         }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<TicketStatus>().ToTable("TicketStatuses");
-            modelBuilder.Entity<Ticket>().Property(p => p.Title).HasMaxLength(200).IsUnicode(false).IsRequired();
-        }
     }
 }
